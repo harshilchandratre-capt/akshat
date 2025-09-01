@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Brother</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      overflow-x: hidden;
+      font-family: 'Lora', serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      font-family: "Playfair Display", serif;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #6fa3ef, 0 0 30px #6fa3ef; }
+      to { text-shadow: 0 0 20px #fff, 0 0 30px #a5d7ff, 0 0 40px #a5d7ff; }
+    }
+
+    .message {
+      max-width: 700px;
+      background: rgba(255,255,255,0.08);
+      padding: 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      margin: 20px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      font-family: "Playfair Display", serif;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.2rem; }
+      .message { max-width: 90%; padding: 15px; }
+    }
+
+    /* Elegant letter style */
+    .personal-note {
+      --card-bg: rgba(255,255,255,0.035);
+      --accent: #ffd36b;
+      font-family: "Lora", serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: #eef6ff;
+      max-width: 820px;
+      margin: 24px auto;
+      padding: 26px 32px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, var(--card-bg), rgba(255,255,255,0.02));
+      box-shadow: 0 14px 40px rgba(3,8,20,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      border-left: 4px solid rgba(255,211,120,0.14);
+      line-height: 1.72;
+      text-align: left;
+      white-space: pre-wrap;
+      position: relative;
+      transition: transform .24s ease, box-shadow .24s ease;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .personal-note:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(3,8,20,0.65);
+    }
+
+    .personal-note::before {
+      content: "“";
+      position: absolute;
+      left: 16px;
+      top: 8px;
+      font-size: 44px;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.9;
+      font-family: "Playfair Display", serif;
+      transform: translateY(-6px);
+      pointer-events: none;
+    }
+
+    .personal-note .signature {
+      display: block;
+      margin-top: 14px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--accent);
+      font-family: "Playfair Display", serif;
+      letter-spacing: 0.6px;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="message">
+    <p class="personal-note">
+Dear Brother,
+
+I know I’ve been caught up in my own world lately, but you’ve always been in my heart. From our childhood games of cricket, CID, and GTA marathons, to every laugh and every moment we shared—you’ve always been more than just a brother. You’ve been my closest friend, my biggest supporter, and someone who’s believed in me even when I doubted myself.
+
+I admire the way you’ve stood by me, the things you’ve done for me, and the faith you carry in my success. One day, I know we’ll live that dream—driving our luxury cars, going on trips with our wives, and laughing like the kids we once were.
+
+Until then, I just want you to know: I’m proud to be your brother, I’m grateful for you, and I love you more than words can say. May this year bring you love, success, and every happiness you deserve.
+
+<span class="signature">✨ Happy 26th Birthday, Brother. ✨</span>
+    </p>
+  </div>
+
+  <footer>Made by chhote ❤️ for you</footer>
+
+  <script>
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initStars();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function initStars() {
+      stars = [];
+      const numStars = 350;
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5,
+          alpha: Math.random(),
+          speed: 0.015 + Math.random() * 0.025
+        });
+      }
+    }
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(star => {
+        star.alpha += star.speed * (Math.random() > 0.5 ? 1 : -1);
+        if (star.alpha <= 0) star.alpha = 0.1;
+        if (star.alpha >= 1) star.alpha = 1;
+
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateStars);
+    }
+
+    resizeCanvas();
+    animateStars();
+  </script>
+</body>
+</html>
